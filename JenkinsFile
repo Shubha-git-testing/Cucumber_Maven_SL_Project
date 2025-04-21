@@ -1,27 +1,39 @@
+
+
 pipeline {
     agent any
     tools {
-        // Install the Maven version configured as "M3" and add it to the path.
         maven "M3"
     }
 
  stages {
        	 stage('Build') {
            	steps {
-              		 git branch: 'main', url: 'https://github.com/Raghugithub9/CucumberProjectandReport.git'
+              		 git branch: 'master', url: 'https://github.com/Shubha-git-testing/Cucumber_Maven_SL_Project'
                         }
 	                     } 
-	
-
 	stage('Clean') {
            		 steps {
-              			bat "mvn -Dmaven.test.failure.ignore=true clean test"
-            		    }
+              			bat "mvn -Dmaven.test.failure.ignore=true clean"
+            		         }
+
+       		   }
+
+
+	stage('Test') {
+           		 steps {
+              			bat "mvn -Dmaven.test.failure.ignore=true test"
+            		         }
+
+
            		 post{
-		        	always{
-				        cucumber	'**/cucumber.json'
-			                }
-		             }
-                	}
+			always{
+				cucumber	'**/cucumber.json'
+			          }
+		       }
+
        		   }
       }
+}
+
+
